@@ -1,0 +1,19 @@
+{
+    "name": "mathc/base-php-project",
+    "description": "Estrutura base para um projeto PHP puro.",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Configs\\": "configs/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Matheus Cardoso",
+            "email": "mathcardoso792@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
