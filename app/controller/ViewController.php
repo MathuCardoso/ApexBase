@@ -11,7 +11,6 @@ class ViewController
     private ?array $links;
     private ?array $scriptLink;
     private ?string $outsideLink;
-    private ?string $appLanguage;
     public App $app;
     public Path $path;
 

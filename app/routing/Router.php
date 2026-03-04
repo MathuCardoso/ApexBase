@@ -39,9 +39,6 @@ class Router
         $rusCount = \count($requestedUriSegments);
         $susCount = \count($serverUriSegments);
 
-        $uri = rtrim(substr($uriFixed, 0, strpos($uriFixed, '{')), "{") ?: "/";
-
-
         if (($rusCount === $susCount)
             && (str_starts_with($uriFixed, $serverUri))
             && ($_SERVER['REQUEST_METHOD'] === $route['httpMethod'])
@@ -101,12 +98,9 @@ class Router
 
             $uri = str_contains($route['uri'], "{") ? self::getFixedUri($route['uri']) : (rtrim($route['uri']) ?: "/");
 
-            if (
-                self::isTheRightRoute($route, $uri)
-            ) {
+            if (self::isTheRightRoute($route, $uri)) {
 
                 [$className, $method] = $route['action'];
-
 
                 if (!class_exists($className)) {
                     throw new RuntimeException("Classe {$className} não encontrada.");

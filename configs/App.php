@@ -8,7 +8,7 @@ class App
 
     public static function name(): string
     {
-        return getenv('APP_NAME') ?? "Project-Name";
+        return $_ENV['APP_NAME'] ?? "en" ?? "Project-Name";
     }
 
     public static function appLang(): string

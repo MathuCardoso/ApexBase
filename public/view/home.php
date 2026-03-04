@@ -1,7 +1,6 @@
 <?php
 
 $viewController->setTitle("Olá")
-->setLinks(["css/home.css"])
 ->includeHtmlHeader();
 ?>
 
@@ -12,5 +11,7 @@ $viewController->setTitle("Olá")
 <?= $params['idade'] ?? null ?>
 
 <?php
-$viewController->includeHtmlFooter();
+$viewController
+// ->setScriptLink(["/js/script.js"])
+->includeHtmlFooter();
 ?>

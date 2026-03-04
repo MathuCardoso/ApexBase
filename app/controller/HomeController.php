@@ -2,9 +2,16 @@
 
 namespace App\controller;
 
+use App\database\Connection;
+use PDO;
+
 class HomeController extends Controller
 {
+    private PDO $conn;
 
+    public function __construct() {
+        $this->conn = Connection::getConn();
+    }
 
     public function index(): void
     {

@@ -14,13 +14,5 @@ class HttpError extends Controller{
         exit;
 
     }
-
-    // private static function getHttp404() {
-    //     require_once __DIR__ . "/../../public/view/errors/404.php";
-    // }
-
-    // private static function getHttp400() {
-    //     require_once __DIR__ . "/../../public/view/errors/400.php";
-    // }
     
 }
