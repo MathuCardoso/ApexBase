@@ -1,0 +1,3 @@
+<?= $this->getJs(); ?>
+</body>
+</html>

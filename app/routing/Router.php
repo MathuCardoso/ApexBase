@@ -2,9 +2,10 @@
 
 namespace App\routing;
 
-use App\http\HttpError;
 use BadMethodCallException;
 use RuntimeException;
+
+use function PHPSTORM_META\type;
 
 class Router
 {
@@ -67,7 +68,7 @@ class Router
         return rtrim($fixedUri, "/") ?: "/";
     }
 
-    public static function get(string $uri, array $action)
+    public static function get(string $uri, callable|array $action)
     {
 
         self::$routes[] = [
@@ -78,7 +79,7 @@ class Router
         ];
     }
 
-    public static function post(string $uri, array $action)
+    public static function post(string $uri, array|callable $action)
     {
         self::$routes[] = [
             'httpMethod' => 'POST',
@@ -100,6 +101,11 @@ class Router
 
             if (self::isTheRightRoute($route, $uri)) {
 
+                if(is_callable($route['action'])) {
+                    $route['action']();
+                    return;
+                }
+
                 [$className, $method] = $route['action'];
 
                 if (!class_exists($className)) {
@@ -119,6 +125,6 @@ class Router
             }
         }
 
-        HttpError::showError(404);
+        httpError(404);
     }
 }

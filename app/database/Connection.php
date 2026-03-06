@@ -2,17 +2,18 @@
 
 namespace App\database;
 
+use App\controller\Controller;
 use Configs\Database;
+use Configs\Path;
 use PDO;
 use PDOException;
 
-class Connection
+class Connection extends Controller
 {
     private static ?PDO $conn = null;
 
     public static function getConn(): PDO
     {
-
         if (self::$conn == null) {
 
             $database = new Database();
@@ -28,11 +29,12 @@ class Connection
                     options: $db['options']
                 );
             } catch (PDOException $p) {
-                echo "Nao foi possível se conectar ao banco de dados.<br>";
-                echo $p->getMessage();
+                $exception = $p;
+                require_once Path::ERRORS . "dbError.php";
+                exit;
             }
         }
-
+        
         return self::$conn;
     }
 }

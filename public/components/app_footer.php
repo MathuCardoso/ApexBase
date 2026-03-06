@@ -1,3 +1,0 @@
-<?= $this->getScriptLink(); ?>
-</body>
-</html>

@@ -5,6 +5,10 @@ use App\routing\Router;
 
 Router::get("/", [HomeController::class, "index"]);
 
+Router::get("/callable", function() {
+    echo "CALLABLE";
+});
+
 Router::get("/{user}/{id}/{idade}", [HomeController::class, "allParams"]);
 Router::get("/user/{id}/{idade}", [HomeController::class, "teste"]);
 

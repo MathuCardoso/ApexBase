@@ -1,29 +1,60 @@
 <?php
+
 namespace Configs;
 
 class Path
 {
-    public const DIR_ROOT = __DIR__ . "/../";
-    public const DIR_APP = Path::DIR_ROOT . "app/";
-    public const DIR_CONTROLLER = Path::DIR_APP . "controller/";
-    public const DIR_MODEL = Path::DIR_APP . "model/";
-    public const DIR_DIR_REPOSITORY = Path::DIR_APP . "repository/";
-    public const DIR_PUBLIC = Path::DIR_ROOT . "public/";
-    public const DIR_VIEW = Path::DIR_PUBLIC . "view/";
-    public const DIR_CSS = Path::DIR_PUBLIC . "css/";
-    public const DIR_JS = Path::DIR_PUBLIC . "js/";
-    public const DIR_COMPONENTS = Path::DIR_PUBLIC . "components/";
-    public const DIR_ASSETS = Path::DIR_PUBLIC . "assets/";
+    /*
+    |--------------------------------------------------------------------------
+    | FILESYSTEM PATHS
+    |--------------------------------------------------------------------------
+    */
 
+    public const ROOT = __DIR__ . "/../";
+    public const APP = self::ROOT . "app/";
+    public const PUBLIC = self::ROOT . "public/";
+    public const VIEW = self::PUBLIC . "view/";
+    public const CSS = self::PUBLIC . "css/";
+    public const JS = self::PUBLIC . "js/";
+    public const COMPONENTS = self::VIEW . "components/";
+    public const ERRORS = self::VIEW . "errors/";
 
+    /*
+    |--------------------------------------------------------------------------
+    | DYNAMIC URL ROOT
+    |--------------------------------------------------------------------------
+    */
 
-    ///////////////  URL  /////////////////////
+    public static function urlRoot(): string
+    {
+        // Detecta automaticamente a pasta base do projeto
+        $scriptName = $_SERVER['SCRIPT_NAME']; // ex: /basePhpProject/index.php
+        return rtrim(str_replace("index.php", "", $scriptName), "/") . "/";
+    }
 
-    public const URL_ROOT = "/";
-    public const URL_PUBLIC = Path::URL_ROOT . "public/";
-    public const URL_VIEW = Path::URL_PUBLIC . "view/";
-    public const URL_CSS = Path::URL_PUBLIC . "css/";
-    public const URL_JS = Path::URL_PUBLIC . "js/";
-    public const URL_COMPONENTS = Path::URL_PUBLIC . "components/";
-    public const URL_ASSETS = Path::URL_PUBLIC . "assets/";
+    /*
+    |--------------------------------------------------------------------------
+    | URL BUILDERS
+    |--------------------------------------------------------------------------
+    */
+
+    public static function url(string $path = ""): string
+    {
+        return self::urlRoot() . ltrim($path, "/");
+    }
+
+    public static function asset(string $path = ""): string
+    {
+        return self::url("public/assets/" . $path);
+    }
+
+    public static function css(string $file = ""): string
+    {
+        return self::url("public/css/" . $file);
+    }
+
+    public static function js(string $file = ""): string
+    {
+        return self::url("public/js/" . $file);
+    }
 }

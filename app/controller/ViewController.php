@@ -8,16 +8,16 @@ use Configs\Path;
 class ViewController
 {
     private ?string $title;
-    private ?array $links;
-    private ?array $scriptLink;
-    private ?string $outsideLink;
+    private ?array $styles;
+    private ?array $js;
+    private ?string $link;
     public App $app;
     public Path $path;
 
     public function __construct()
     {
         $this->title = "Projeto PHP";
-        $this->outsideLink = null;
+        $this->link = null;
         $this->app = new App;
         $this->path = new Path();
     }
@@ -34,16 +34,16 @@ class ViewController
         return $this;
     }
 
-    public function getLinks()
+    public function getStyles()
     {
-        if (!empty($this->links)) {
-            foreach ($this->links as $l) {
-                if (file_exists(Path::DIR_PUBLIC . $l)) {
+        if (!empty($this->styles)) {
+            foreach ($this->styles as $s) {
+                if (file_exists(Path::CSS . $s)) {
                     echo "<link 
                 rel='stylesheet' 
-                href='" . Path::URL_PUBLIC . "$l'>";
+                href='" . Path::css($s) . "'>";
                 } else {
-                    echo "O arquivo " . Path::URL_PUBLIC . $l . "Não existe!";
+                    echo "O arquivo " . Path::CSS . $s . " Não existe!";
                     return;
                 }
             }
@@ -52,22 +52,23 @@ class ViewController
         }
     }
 
-    public function setLinks(array $links = [])
+    public function setStyles(array $styles = [])
     {
-        $this->links = $links;
+        $this->styles = $styles;
 
         return $this;
     }
 
-    public function getScriptLink()
+    public function getJs()
     {
-        if (!empty($this->scriptLink)) {
-            foreach ($this->scriptLink as $l) {
-                if (file_exists(Path::DIR_PUBLIC . $l)) {
+        if (!empty($this->js)) {
+            foreach ($this->js as $j) {
+                if (file_exists(Path::JS . $j)) {
                     echo "<script 
-                    src='" . Path::URL_PUBLIC . $l . "'></script>";
+                        src='" . Path::js($j) . "'>
+                    </script>";
                 } else {
-                    echo "O arquivo " . Path::URL_PUBLIC . $l . " Não existe!";
+                    echo "O arquivo " . Path::JS . $j . " Não existe!";
                     return;
                 }
             }
@@ -76,41 +77,43 @@ class ViewController
         }
     }
 
-    public function setScriptLink(array $script = [])
+    public function setJs(array $js = [])
     {
-        $this->scriptLink = $script;
+        $this->js = $js;
 
         return $this;
     }
 
     /**
-     * Get the value of outsideLink
+     * Get the value of Link
      */
-    public function getOutsideLink()
+    public function getLink()
     {
-        return $this->outsideLink;
+        return $this->link;
     }
 
     /**
-     * Set the value of outsideLink
+     * Set the value of Link
      *
      * @return  self
      */
-    public function setOutsideLink($outsideLink)
+    public function setLink($link)
     {
-        $this->outsideLink = $outsideLink;
+        $this->link = $link;
 
         return $this;
     }
 
     public function includeHtmlHeader()
     {
-        require_once Path::DIR_COMPONENTS . "app_head.php";
+        require_once Path::VIEW . "html_template/app_head.php";
+        return $this;
     }
 
     public function includeHtmlFooter()
     {
-        require_once Path::DIR_COMPONENTS . "app_footer.php";
+        require_once Path::VIEW . "html_template/app_footer.php";
+        return $this;
     }
 
     public function routeIs(string $route): bool

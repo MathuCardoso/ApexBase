@@ -5,7 +5,10 @@
         "psr-4": {
             "App\\": "app/",
             "Configs\\": "configs/"
-        }
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
     },
     "authors": [
         {

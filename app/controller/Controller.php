@@ -4,13 +4,14 @@
 namespace App\controller;
 
 use App\controller\ViewController;
+use Configs\Path;
 
 class Controller
 {
 
     public function loadView(string $file, array $var = [])
     {
-        $viewPath = __DIR__ . "/../../public/view/";
+        $viewPath = Path::VIEW;
 
 
         $fullPath = "$viewPath{$file}.php";
@@ -20,7 +21,7 @@ class Controller
             if (!empty($var))
                 extract($var);
 
-            $viewController = new ViewController();
+            $view = new ViewController();
             require_once $fullPath;
             exit;
         }
