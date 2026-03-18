@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'mathc/base-php-project',
+        'name' => 'mathc/apex-base',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '696b2048ced14c1c18cc5f722da8954cc0862802',
+        'reference' => '242a9194e537fe7f25df2b79544950ac394801b2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,10 +19,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'mathc/base-php-project' => array(
+        'mathc/apex-base' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '696b2048ced14c1c18cc5f722da8954cc0862802',
+            'reference' => '242a9194e537fe7f25df2b79544950ac394801b2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

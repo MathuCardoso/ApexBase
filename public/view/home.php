@@ -1,9 +1,8 @@
 <?php
 
-$view
-    ->setStyles([css("home")])
-    ->setTitle("Bem-vindo!")
-    ->includeHtmlHeader();
+$view->setStyles([css('home')])
+->setTitle('Bem-vindo!')
+->includeHtmlHeader();
 ?>
 
 <div class="container">
@@ -25,7 +24,5 @@ $view
 
 
 <?php
-$view
-    ->setJs(["script.js"])
-    ->includeHtmlFooter();
+$view->setJs(['script'])->includeHtmlFooter();
 ?>

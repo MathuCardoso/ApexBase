@@ -1,13 +1,11 @@
 <?php
 
-namespace App\database;
+namespace Apx\core\database;
 
-use App\controller\Controller;
-use Configs\Database;
 use PDO;
 use PDOException;
 
-class Connection extends Controller
+class Connection
 {
     private static ?PDO $conn = null;
 
@@ -15,8 +13,7 @@ class Connection extends Controller
     {
         if (self::$conn == null) {
 
-            $database = new Database();
-            $db = $database->getDbInfo();
+            $db = require "config.php";
 
             $dsn = "{$db['driver']}:host={$db['host']};dbname={$db['dbName']};port={$db['port']}";
 

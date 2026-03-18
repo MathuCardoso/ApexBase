@@ -1,13 +1,14 @@
 {
-    "name": "mathc/apex-base",
+    "name": "math/apx-base",
     "description": "Estrutura base para um projeto PHP vanilla.",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Configs\\": "configs/"
+            "Configs\\": "configs/",
+            "Apx\\": "apx/"
         },
         "files": [
-            "helpers/helpers.php"
+            "apx/core/util/helpers.php"
         ]
     },
     "authors": [

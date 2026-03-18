@@ -1,13 +1,12 @@
 <?php
 
-namespace App\routing;
+namespace Apx\core\router;
 
 use BadMethodCallException;
 use RuntimeException;
 
 class Router
 {
-
     private static array $routes = [];
 
     private static function getParams(string $uri)

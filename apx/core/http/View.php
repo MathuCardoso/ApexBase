@@ -1,10 +1,8 @@
 <?php
 
-namespace App\controller;
+namespace Apx\core\http;
 
-use Configs\App;
-
-class ViewController
+class View
 {
 	private ?string $title;
 	private ?array $styles;
@@ -103,14 +101,14 @@ class ViewController
 
 	public function includeHtmlHeader()
 	{
-		require_once viewPath() . 'html_template/app_head.php';
+		require_once layoutsPath() . 'html_template/header.php';
 
 		return $this;
 	}
 
 	public function includeHtmlFooter()
 	{
-		require_once viewPath() . 'html_template/app_footer.php';
+		require_once layoutsPath() . 'html_template/footer.php';
 
 		return $this;
 	}

@@ -1,6 +1,24 @@
 <?php
 
-use App\controller\Controller;
+use Apx\core\http\View;
+
+function loadView(string $file, array $var = []) {
+	$fullPath = viewPath() . "{$file}.php";
+
+		if (file_exists($fullPath)) {
+			if (!empty($var)) {
+				extract($var);
+			}
+
+			ob_start();
+			$view = new View();
+			require_once $fullPath;
+			ob_end_flush();
+			exit;
+		}
+		httpError(404);
+		exit;
+}
 
 function appName()
 {
@@ -19,6 +37,10 @@ function basePath()
 
 function viewPath() {
 	return basePath() . "/public/view/";
+}
+
+function layoutsPath() {
+	return viewPath() . "layouts/";
 }
 
 function errorsPath() {
@@ -86,14 +108,13 @@ function br($times = 1)
 function httpError(int $code = 500, string $message = '')
 {
 	http_response_code($code);
-	$controller = new Controller();
-	$controller->loadView("errors/{$code}", ['message' => $message]);
+	loadView("errors/{$code}", ['message' => $message]);
 	exit;
 }
 
 function addLog(string $log = ''): void
 {
-	$logFile = __DIR__ . '/../storage/logs.txt';
+	$logFile = basePath() . "/storage/logs.txt";
 
 	$date = date($_ENV['APP_DATE_FORMAT'] . ' - H:i:s');
 

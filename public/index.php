@@ -1,5 +1,6 @@
 <?php
-use App\routing\Router;
+
+use Apx\core\router\Router;
 use Dotenv\Dotenv;
 
 define('BASE_PATH', dirname(__DIR__));
@@ -8,14 +9,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
+date_default_timezone_set($_ENV['APP_DEFAULT_TIMEZONE']);
+
 if ($_ENV['APP_ENV'] === 'development') {
 	ini_set('display_errors', 1);
 	error_reporting(E_ALL);
 } else {
 	ini_set('display_errors', 0);
 }
-
-date_default_timezone_set($_ENV['APP_DEFAULT_TIMEZONE']);
 
 set_exception_handler(function ($e) {
 	while (ob_get_level() > 0) {
@@ -34,5 +35,5 @@ set_exception_handler(function ($e) {
 
 // throw new Exception("EXCEPTION DE TESTE");
 
-require_once __DIR__ . '/../app/routing/routes.php';
+require_once __DIR__ . '/../routes/web.php';
 Router::dispatch();
