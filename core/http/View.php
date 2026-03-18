@@ -1,6 +1,6 @@
 <?php
 
-namespace Apx\core\http;
+namespace Core\http;
 
 class View
 {

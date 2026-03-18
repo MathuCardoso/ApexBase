@@ -1,7 +1,7 @@
 <?php
 
 use App\controllers\HomeController;
-use Apx\core\router\Router;
+use Core\router\Router;
 
 
 Router::get('/', [HomeController::class, 'index']);

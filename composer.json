@@ -5,10 +5,11 @@
         "psr-4": {
             "App\\": "app/",
             "Configs\\": "configs/",
-            "Apx\\": "apx/"
+            "Core\\": "core/"
         },
         "files": [
-            "apx/core/util/helpers.php"
+            "core/util/helpers.php",
+            "core/util/pathHelpers.php"
         ]
     },
     "authors": [

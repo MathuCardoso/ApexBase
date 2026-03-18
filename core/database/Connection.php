@@ -1,6 +1,6 @@
 <?php
 
-namespace Apx\core\database;
+namespace Core\database;
 
 use PDO;
 use PDOException;

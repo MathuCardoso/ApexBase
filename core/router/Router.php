@@ -1,6 +1,6 @@
 <?php
 
-namespace Apx\core\router;
+namespace Core\router;
 
 use BadMethodCallException;
 use RuntimeException;
