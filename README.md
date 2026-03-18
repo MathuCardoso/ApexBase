@@ -124,34 +124,64 @@ public function index(): void
 ## Estrutura do projeto
 
 ```text
-ApexBase/
+basePhpProject/
+├── composer.json
+├── README.md
 ├── app/
-│   ├── controller/      # Controllers base e controllers da aplicação
-│   ├── database/        # Classe de conexão com banco de dados
-│   └── routing/         # Router e definição das rotas
-├── configs/             # Configurações centralizadas, como banco
-├── helpers/             # Funções auxiliares globais
-├── public/              # Ponto de entrada da aplicação e arquivos públicos
-│   ├── css/             # Arquivos de estilo
-│   ├── js/              # Scripts front-end
-│   ├── view/            # Views da aplicação e páginas de erro
-│   └── index.php        # Front controller
-├── storage/             # Logs e arquivos gerados em tempo de execução
-├── vendor/              # Dependências instaladas pelo Composer
-├── .env.example         # Exemplo de variáveis de ambiente
-├── composer.json        # Dependências, autoload e scripts
-└── README.md
+│   ├── controllers/
+│   │   └── HomeController.php
+│   ├── model/
+│   ├── repository/
+│   └── service/
+├── apx/
+│   └── core/
+│       ├── database/
+│       │   ├── config.php
+│       │   └── Connection.php
+│       ├── http/
+│       │   └── View.php
+│       ├── router/
+│       │   └── Router.php
+│       └── util/
+│           └── helpers.php
+├── public/
+│   ├── index.php
+│   ├── css/
+│   │   ├── home.css
+│   │   └── main.css
+│   └── js/
+│       └── script.js
+├── view/
+│   ├── home.php
+│   ├── errors/
+│   │   ├── 404.php
+│   │   ├── 500.php
+│   │   └── dbError.php
+│   └── layouts/
+│       └── html_template/
+│           ├── footer.php
+│           └── header.php
+├── routes/
+│   └── web.php
+├── storage/
+│   └── logs.txt
+└── vendor/
 ```
 
 ### Pastas importantes
 
-- `app/controller`: concentra a lógica de controle e o carregamento de views.
-- `app/routing`: contém a classe `Router` e o arquivo de registro das rotas.
-- `app/database`: centraliza a conexão com o banco usando `PDO`.
-- `configs`: armazena configurações reutilizáveis do sistema.
-- `helpers`: disponibiliza funções globais como `dd()`, `httpError()` e `addLog()`.
-- `public/view`: guarda as páginas, templates HTML e telas de erro.
-- `storage`: usado para persistir logs da aplicação.
+- `app/controllers`: controllers da aplicação e lógica de roteamento por controller.
+- `app/model`: modelos ou classes relacionadas à representação de dados.
+- `app/repository`: classes de acesso a dados e abstrações de persistência.
+- `app/service`: serviços de domínio e regras de negócio.
+- `apx/core/database`: configuração e implementação da conexão com PDO.
+- `apx/core/router`: implementação do roteador da aplicação.
+- `apx/core/http`: helpers para renderização de views e resposta HTTP.
+- `public`: ponto de entrada (`index.php`) e recursos públicos (`css`, `js`).
+- `view`: templates, layouts e páginas de erro.
+- `routes`: definição das rotas, por exemplo `web.php`.
+- `storage`: logs e arquivos gerados em execução.
+- `vendor`: dependências gerenciadas pelo Composer.
 
 ## Contribuição
 
