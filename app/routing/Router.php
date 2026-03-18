@@ -5,8 +5,6 @@ namespace App\routing;
 use BadMethodCallException;
 use RuntimeException;
 
-use function PHPSTORM_META\type;
-
 class Router
 {
 

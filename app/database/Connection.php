@@ -4,7 +4,6 @@ namespace App\database;
 
 use App\controller\Controller;
 use Configs\Database;
-use Configs\Path;
 use PDO;
 use PDOException;
 
@@ -30,7 +29,7 @@ class Connection extends Controller
                 );
             } catch (PDOException $p) {
                 $exception = $p;
-                require_once Path::ERRORS . "dbError.php";
+                require_once errorsPath() . "dbError.php";
                 exit;
             }
         }

@@ -1,6 +1,6 @@
 {
-    "name": "mathc/base-php-project",
-    "description": "Estrutura base para um projeto PHP puro.",
+    "name": "mathc/apex-base",
+    "description": "Estrutura base para um projeto PHP vanilla.",
     "autoload": {
         "psr-4": {
             "App\\": "app/",

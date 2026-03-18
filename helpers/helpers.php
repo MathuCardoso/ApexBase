@@ -2,56 +2,102 @@
 
 use App\controller\Controller;
 
+function appName()
+{
+	return $_ENV['APP_NAME'] ?? 'en' ?? 'Project-Name';
+}
+
+function appLang()
+{
+	return  $_ENV['APP_LANG'] ?? 'en';
+}
+
+function basePath()
+{
+	return BASE_PATH;
+}
+
+function viewPath() {
+	return basePath() . "/public/view/";
+}
+
+function errorsPath() {
+	return viewPath() . "errors/";
+
+}
+
+function css(string $file, bool $dir = false)
+{
+	$file = str_replace(['.css', '/css/'], '', $file);
+
+	return
+	$dir == false
+	? "/css/{$file}.css"
+	: basePath() . "/public/css/{$file}.css";
+}
+
+function js(string $file, bool $dir = false)
+{
+	$file = str_replace(['.js', '/js/'], '', $file);
+
+	return
+	$dir == false
+	? "/js/{$file}.js"
+	: basePath() . "/public/js/{$file}.js";
+}
+
 function dd($var)
 {
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-    exit;
+	echo '<pre>';
+	var_dump($var);
+	echo '</pre>';
+	exit;
 }
 
 function isRoute(string $route): bool
 {
-    //Não é funcional ao tentar passar rotas com path params como parametro da função.
-    if ($route === parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
-        return true;
-    }
-    return false;
+	//Não é funcional ao tentar passar rotas com path params como parametro da função.
+	if ($route === parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+		return true;
+	}
+
+	return false;
 }
 
 function alert(string $msg)
 {
-    echo "<script>";
-    echo "alert('{$msg}')";
-    echo "</script>";
+	echo '<script>';
+	echo "alert('{$msg}')";
+	echo '</script>';
 }
 function br($times = 1)
 {
-    if ($times === 1) {
-        echo "<br>";
-        return;
-    }
+	if ($times === 1) {
+		echo '<br>';
 
-    for ($i = 0; $i <= $times; $i++) {
-        echo "<br>";
-    }
+		return;
+	}
+
+	for ($i = 0; $i <= $times; $i++) {
+		echo '<br>';
+	}
 }
 
-function httpError(int $code = 500, string $message = "")
+function httpError(int $code = 500, string $message = '')
 {
-    http_response_code($code);
-    $controller = new Controller();
-    $controller->loadView("errors/{$code}", ["message" => $message]);
-    exit;
+	http_response_code($code);
+	$controller = new Controller();
+	$controller->loadView("errors/{$code}", ['message' => $message]);
+	exit;
 }
 
-function addLog(string $log = ""): void {
+function addLog(string $log = ''): void
+{
+	$logFile = __DIR__ . '/../storage/logs.txt';
 
-    $logFile = __DIR__ . "/../storage/logs.txt";
+	$date = date($_ENV['APP_DATE_FORMAT'] . ' - H:i:s');
 
-    $date = date($_ENV['APP_DATE_FORMAT'] . ' - H:i:s');
+	$stringLog = "Data: {$date} | $log\n\n";
 
-    $stringLog = "Data: {$date} | $log\n\n";
-
-    file_put_contents($logFile, $stringLog, FILE_APPEND);
+	file_put_contents($logFile, $stringLog, FILE_APPEND);
 }
