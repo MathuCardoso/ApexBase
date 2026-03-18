@@ -1,6 +1,6 @@
 <?php
 
-use Apx\core\router\Router;
+use Core\router\Router;
 use Dotenv\Dotenv;
 
 define('BASE_PATH', dirname(__DIR__));

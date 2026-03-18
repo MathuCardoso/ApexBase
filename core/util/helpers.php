@@ -1,6 +1,6 @@
 <?php
 
-use Apx\core\http\View;
+use Core\http\View;
 
 function loadView(string $file, array $var = []) {
 	$fullPath = viewPath() . "{$file}.php";

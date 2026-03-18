@@ -1,0 +1,12 @@
+<?php
+
+$host = "127.0.0.1";
+$port = 8000;
+$publicPath = __DIR__ . "/public";
+
+echo "🚀 Servidor rodando em http://$host:$port\n";
+echo "📂 Servindo pasta: $publicPath\n\n";
+
+$command = "php -S {$host}:$port -t {$publicPath}";
+
+passthru($command);
