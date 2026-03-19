@@ -7,121 +7,148 @@ use RuntimeException;
 
 class Router
 {
-    private static array $routes = [];
+	private static array $routes = [];
 
-    private static function getParams(string $uri)
-    {
-        $params = [];
-        if ($_SERVER['REQUEST_URI'] !== "/") {
-            $requestedUri = explode("/", ltrim($uri, "/"));
-            $serverUri = explode("/", parse_url(ltrim($_SERVER['REQUEST_URI'], "/"), PHP_URL_PATH));
 
-            foreach ($requestedUri as $index => $seg) {
-                if (str_contains($seg, "{")) {
-                    $param = ltrim(rtrim($seg, "}"), "{");
+	public static function get(string $uri, callable|array $action)
+	{
+		self::$routes[] = [
+			'httpMethod' => 'GET',
+			'uri' => $uri,
+			'action' => $action,
+			'params' => self::getParams($uri) ?? null,
+		];
+	}
 
-                    $params[$param] = $serverUri[$index] ?? "";
-                }
-            }
+	public static function post(string $uri, array|callable $action)
+	{
+		self::$routes[] = [
+			'httpMethod' => 'POST',
+			'uri' => $uri,
+			'action' => $action,
+			'params' => self::getParams($uri) ?? null,
+		];
+	}
 
-            return $params ?? null;
-        }
-    }
+	public static function put(string $uri, array|callable $action)
+	{
+		if (isset($_POST['__method'])
+			&& $_POST['__method'] === 'PUT') {
+			$_SERVER['REQUEST_METHOD'] = 'PUT';
 
-    private static function isTheRightRoute(array $route, string $uriFixed)
-    {
-        $requestedUriSegments = array_filter(explode("/", trim($uriFixed, "/")));
-        $serverUriSegments = array_filter(explode("/", trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/")));
-        $serverUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			self::$routes[] = [
+				'httpMethod' => 'PUT',
+				'uri' => $uri,
+				'action' => $action,
+				'params' => self::getParams($uri) ?? null,
+			];
+		}
+	}
 
-        $rusCount = \count($requestedUriSegments);
-        $susCount = \count($serverUriSegments);
+	public static function delete(string $uri, array|callable $action)
+	{
+		if (isset($_POST['__method'])
+			&& $_POST['__method'] === 'DELETE') {
+			$_SERVER['REQUEST_METHOD'] = 'DELETE';
 
-        if (($rusCount === $susCount)
-            && (str_starts_with($uriFixed, $serverUri))
-            && ($_SERVER['REQUEST_METHOD'] === $route['httpMethod'])
-        ) {
-            return true;
-        }
+			self::$routes[] = [
+				'httpMethod' => 'DELETE',
+				'uri' => $uri,
+				'action' => $action,
+				'params' => self::getParams($uri) ?? null,
+			];
+		}
+	}
 
-        return false;
-    }
 
-    private static function getFixedUri(string $uri,)
-    {
-        $requestedUri = explode("/", ltrim($uri, "/"));
-        $serverUri = explode("/", parse_url(ltrim($_SERVER['REQUEST_URI'], "/"), PHP_URL_PATH));
+	private static function getParams(string $uri)
+	{
+		$params = [];
+		if ($_SERVER['REQUEST_URI'] !== '/') {
+			$requestedUri = explode('/', ltrim($uri, '/'));
+			$serverUri = explode('/', parse_url(ltrim($_SERVER['REQUEST_URI'], '/'), PHP_URL_PATH));
 
-        $fixedUri = "/";
-        foreach ($requestedUri as $index => $seg) {
-            if (str_contains($seg, "{") && isset($serverUri[$index])) {
-                $fixedUri .= "{$serverUri[$index]}/";
-                continue;
-            }
+			foreach ($requestedUri as $index => $seg) {
+				if (str_contains($seg, '{')) {
+					$param = ltrim(rtrim($seg, '}'), '{');
 
-            $fixedUri .= "{$seg}/";
-        }
+					$params[$param] = $serverUri[$index] ?? '';
+				}
+			}
 
-        return rtrim($fixedUri, "/") ?: "/";
-    }
+			return $params ?? null;
+		}
+	}
 
-    public static function get(string $uri, callable|array $action)
-    {
+	private static function isTheRightRoute(array $route, string $uriFixed)
+	{
+		$requestedUriSegments = array_filter(explode('/', trim($uriFixed, '/')));
+		$serverUriSegments = array_filter(explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/')));
+		$serverUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        self::$routes[] = [
-            'httpMethod' => 'GET',
-            'uri' => $uri,
-            'action' => $action,
-            'params' => self::getParams($uri) ?? null
-        ];
-    }
+		$rusCount = \count($requestedUriSegments);
+		$susCount = \count($serverUriSegments);
 
-    public static function post(string $uri, array|callable $action)
-    {
-        self::$routes[] = [
-            'httpMethod' => 'POST',
-            'uri' => $uri,
-            'action' => $action,
-            'params' => self::getParams($uri) ?? null
-        ];
-    }
+		if (($rusCount === $susCount)
+			&& (str_starts_with($uriFixed, $serverUri))
+			&& ($_SERVER['REQUEST_METHOD'] === $route['httpMethod'])
+		) {
+			return true;
+		}
 
-    public static function put() {}
+		return false;
+	}
 
-    public static function delete() {}
+	private static function getFixedUri(string $uri)
+	{
+		$requestedUri = explode('/', ltrim($uri, '/'));
+		$serverUri = explode('/', parse_url(ltrim($_SERVER['REQUEST_URI'], '/'), PHP_URL_PATH));
 
-    public static function dispatch()
-    {
-        foreach (self::$routes as $route) {
+		$fixedUri = '/';
+		foreach ($requestedUri as $index => $seg) {
+			if (str_contains($seg, '{') && isset($serverUri[$index])) {
+				$fixedUri .= "{$serverUri[$index]}/";
 
-            $uri = str_contains($route['uri'], "{") ? self::getFixedUri($route['uri']) : (rtrim($route['uri']) ?: "/");
+				continue;
+			}
 
-            if (self::isTheRightRoute($route, $uri)) {
+			$fixedUri .= "{$seg}/";
+		}
 
-                if(is_callable($route['action'])) {
-                    $route['action']($route['params']);
-                    return;
-                }
+		return rtrim($fixedUri, '/') ?: '/';
+	}
 
-                [$className, $method] = $route['action'];
+	public static function dispatch()
+	{
+		foreach (self::$routes as $route) {
+			$uri = str_contains($route['uri'], '{') ? self::getFixedUri($route['uri']) : (rtrim($route['uri']) ?: '/');
 
-                if (!class_exists($className)) {
-                    throw new RuntimeException("Classe {$className} não encontrada.");
-                }
+			if (self::isTheRightRoute($route, $uri)) {
+				if (is_callable($route['action'])) {
+					$route['action']($route['params']);
 
-                if (!method_exists($className, $method)) {
-                    throw new BadMethodCallException(
-                        message: "Método {$method} não existe na classe {$className}"
-                    );
-                }
+					return;
+				}
 
-                $obj = new $className();
-                $obj->$method($route['params']);
+				[$className, $method] = $route['action'];
 
-                return;
-            }
-        }
+				if (!class_exists($className)) {
+					throw new RuntimeException("Classe {$className} não encontrada.");
+				}
 
-        httpError(404);
-    }
+				if (!method_exists($className, $method)) {
+					throw new BadMethodCallException(
+						message: "Método {$method} não existe na classe {$className}"
+					);
+				}
+
+				$obj = new $className();
+				$obj->$method($route['params']);
+
+				return;
+			}
+		}
+
+		httpError(404);
+	}
 }

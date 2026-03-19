@@ -20,6 +20,19 @@ function loadView(string $file, array $var = []) {
 		exit;
 }
 
+function method(string $method) {
+		$method = strtoupper($method);
+		return "<input type='hidden' name='__method' value='{$method}'>";
+}
+
+function put() {
+		method("PUT");
+}
+
+function delete() {
+		method("DELETE");
+}
+
 function appName()
 {
 	return $_ENV['APP_NAME'] ?? 'en' ?? 'Project-Name';
