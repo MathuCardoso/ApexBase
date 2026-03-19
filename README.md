@@ -10,7 +10,7 @@ O **ApexBase** funciona como um mini framework para aplicações PHP puras. A pr
 
 ## Funcionalidades
 
-- Roteamento simples com suporte a rotas `GET` e `POST`
+- Roteamento com suporte a rotas `GET`, `POST`, `PUT` e `DELETE`
 - Suporte a **path parameters** em rotas, como `/user/{id}`
 - Carregamento de views por controller
 - Helpers globais para utilidades comuns
@@ -75,16 +75,10 @@ DB_PASSWORD=
 
 ## Como usar
 
-Inicie o servidor local com um dos comandos:
+Inicie o servidor local com o comando abaixo:
 
 ```bash
-composer serve
-```
-
-ou
-
-```bash
-composer run serve
+php serve
 ```
 
 Por padrão, a aplicação será servida em:
@@ -95,11 +89,11 @@ http://localhost:8000
 
 ### Exemplo de rota
 
-As rotas ficam em `app/routing/routes.php`:
+As rotas ficam em `/routes.php`:
 
 ```php
 use App\controller\HomeController;
-use App\routing\Router;
+use Core\router\Router;
 
 Router::get('/callable', function () {
 	echo 'Callable funcionando!';
@@ -124,64 +118,67 @@ public function index(): void
 ## Estrutura do projeto
 
 ```text
-basePhpProject/
-├── composer.json
-├── README.md
+ApexBase/
 ├── app/
 │   ├── controllers/
 │   │   └── HomeController.php
 │   ├── model/
 │   ├── repository/
 │   └── service/
-├── apx/
-│   └── core/
-│       ├── database/
-│       │   ├── config.php
-│       │   └── Connection.php
-│       ├── http/
-│       │   └── View.php
-│       ├── router/
-│       │   └── Router.php
-│       └── util/
-│           └── helpers.php
+├── core/
+│   ├── database/
+│   │   ├── config.php
+│   │   └── Connection.php
+│   ├── http/
+│   │   └── View.php
+│   ├── router/
+│   │   └── Router.php
+│   └── util/
+│       ├── helpers.php
+│       └── pathHelpers.php
 ├── public/
 │   ├── index.php
 │   ├── css/
 │   │   ├── home.css
 │   │   └── main.css
-│   └── js/
-│       └── script.js
-├── view/
-│   ├── home.php
-│   ├── errors/
-│   │   ├── 404.php
-│   │   ├── 500.php
-│   │   └── dbError.php
-│   └── layouts/
-│       └── html_template/
-│           ├── footer.php
-│           └── header.php
+│   ├── js/
+│   │   └── script.js
+│   └── view/
+│       ├── home.php
+│       ├── errors/
+│       │   ├── 404.php
+│       │   ├── 500.php
+│       │   └── dbError.php
+│       └── layouts/
+│           └── html_template/
+│               ├── footer.php
+│               └── header.php
 ├── routes/
 │   └── web.php
 ├── storage/
 │   └── logs.txt
+├── .env.example
+├── composer.json
+├── serve
 └── vendor/
 ```
 
 ### Pastas importantes
 
-- `app/controllers`: controllers da aplicação e lógica de roteamento por controller.
-- `app/model`: modelos ou classes relacionadas à representação de dados.
-- `app/repository`: classes de acesso a dados e abstrações de persistência.
-- `app/service`: serviços de domínio e regras de negócio.
-- `apx/core/database`: configuração e implementação da conexão com PDO.
-- `apx/core/router`: implementação do roteador da aplicação.
-- `apx/core/http`: helpers para renderização de views e resposta HTTP.
-- `public`: ponto de entrada (`index.php`) e recursos públicos (`css`, `js`).
-- `view`: templates, layouts e páginas de erro.
-- `routes`: definição das rotas, por exemplo `web.php`.
-- `storage`: logs e arquivos gerados em execução.
-- `vendor`: dependências gerenciadas pelo Composer.
+- `app/controllers`: controllers responsáveis por receber a requisição e carregar views ou executar ações.
+- `app/model`: espaço reservado para modelos e classes de representação de dados.
+- `app/repository`: camada para acesso a dados e consultas ao banco.
+- `app/service`: regras de negócio e serviços da aplicação.
+- `core/database`: configuração e conexão com o banco via `PDO`.
+- `core/http`: classe de apoio para renderização de views e resposta HTTP.
+- `core/router`: implementação do roteador da aplicação.
+- `core/util`: helpers globais e utilitários de caminho carregados pelo Composer.
+- `public`: diretório público da aplicação, com `index.php`, arquivos estáticos e as views.
+- `public/view`: páginas, layouts e telas de erro exibidas pela aplicação.
+- `routes`: definição das rotas, como o arquivo `web.php`.
+- `storage`: arquivos gerados em tempo de execução, como logs.
+- `serve`: script utilitário para subir o servidor local rapidamente.
+- `vendor`: dependências instaladas pelo Composer.
 
 ## Contribuição
 
@@ -194,10 +191,6 @@ Contribuições são bem-vindas. Para colaborar:
 5. Abra um Pull Request com uma descrição clara
 
 Se a ideia for uma melhoria estrutural, vale abrir uma issue antes para alinhar a proposta.
-
-## Licença
-
-Este projeto ainda **não possui uma licença definida** no repositório. Se você pretende reutilizar ou distribuir este código, o ideal é adicionar uma licença explícita antes.
 
 ## Autor
 
