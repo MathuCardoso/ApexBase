@@ -43,14 +43,6 @@ function appLang()
 	return  $_ENV['APP_LANG'] ?? 'en';
 }
 
-function dd($var)
-{
-	echo '<pre>';
-	var_dump($var);
-	echo '</pre>';
-	exit;
-}
-
 function isRoute(string $route): bool
 {
 	//Não é funcional ao tentar passar rotas com path params como parametro da função.
