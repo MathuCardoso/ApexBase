@@ -8,7 +8,7 @@ $view->setStyles([css('home')])
 <div class="container">
 
     <h1>🚀 <?= appName(); ?>!</h1>
-
+    <!-- <p>Seu nome é: <?= $nome ?></p> -->
     <h2>Seu projeto PHP está funcionando!</h2>
 
     <p>
