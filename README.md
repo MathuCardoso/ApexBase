@@ -34,7 +34,7 @@ O **ApexBase** funciona como um mini framework para aplicações PHP puras. A pr
 Clone o repositório:
 
 ```bash
-git clone <https://github.com/MathuCardoso/ApxBase>
+git clone https://github.com/MathuCardoso/ApxBase
 cd ApexBase
 ```
 
