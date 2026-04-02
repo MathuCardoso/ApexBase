@@ -1,10 +1,10 @@
-# ApexBase
+# Flavour
 
 Uma estrutura base para projetos PHP Vanilla, pensada para desenvolvedores que desejam iniciar projetos pessoais sem depender de frameworks robustos.
 
 ## Descrição
 
-O **ApexBase** funciona como um mini framework para aplicações PHP puras. A proposta é oferecer uma base enxuta, organizada e fácil de entender, com recursos essenciais para acelerar o desenvolvimento, como roteamento, carregamento de views, helpers e conexão com banco de dados.
+O **Flavour** oferece ao usuário apenas um “gostinho” (flavour) da experiência de trabalhar com um framework completo, como o Laravel. A proposta é disponibilizar uma base leve, organizada e de fácil compreensão, contendo recursos essenciais que ajudam a acelerar o desenvolvimento, como roteamento, renderização de views, helpers e conexão com banco de dados.
 
 > Aviso: este projeto foi criado com foco em **estudo, prototipação e desenvolvimento local**. Ele **não é recomendado para produção**.
 
@@ -195,4 +195,4 @@ Se a ideia for uma melhoria estrutural, vale abrir uma issue antes para alinhar 
 ## Autor
 
 **Matheus Cardoso**  
-Desenvolvedor responsável pelo projeto **ApexBase**.
+Desenvolvedor responsável pelo projeto **Flavour**.
